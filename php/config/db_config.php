@@ -2,5 +2,5 @@
     $host="localhost";
     $login="root";
     $password="";
-    $database="onlineshop-database";
+    $database="onlineshop";
 ?>

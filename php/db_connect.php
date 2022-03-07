@@ -1,5 +1,5 @@
 <?php
-    require_once('/config/db_config.php');
+    require_once('config/db_config.php');
 
     function getConnect($host, $login, $password, $database){
         $connect=new mysqli($host, $login, $password, $database);
@@ -11,7 +11,7 @@
         return $connect;
     }
  
-    function databaseFunction($host, $login, $password, $database) {
+    /*function databaseFunction($host, $login, $password, $database) {
         $connect = getConnect($host, $login, $password, "");
         $connect->query("CREATE DATABASE IF NOT EXISTS $database CHARACTER SET utf8mb4;");
         $connect->query("USE $database");
@@ -76,15 +76,15 @@
         ALTER TABLE `admin` MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=2;
         ALTER TABLE `category` MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=11;
         ALTER TABLE `products` MODIFY `id` int(11) NOT NULL AUTO_INCREMENT;
-        ALTER TABLE `users` MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=2; COMMIT;*/
+        ALTER TABLE `users` MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=2; COMMIT;
         ");
-    }
+    }*/
  
     function disConnect($connect){
         $connect->close();
     }
  
     
-    databaseFunction($host, $login, $password, $database);
+    //databaseFunction($host, $login, $password, $database);
     $connect = getConnect($host, $login, $password, $database);
 ?>
