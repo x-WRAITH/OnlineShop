@@ -81,7 +81,7 @@ session_start();
         <div class="container" id="container">
           <!-- sign in page -->
           <div class="form-container sign-in-container">
-            <form method="POST" action="models/login.php" class="form" id="login">
+            <form method="POST" action="modes/login.php" class="form" id="login">
               <h1 class="form__title">Login</h1>
               <div class="form__input-group">
                 <label for="username">Username: </label>
@@ -99,7 +99,7 @@ session_start();
 
           <!--  create account page -->
           <div class="form-container sign-up-container">
-            <form method="POST" action="#" class="form" id="register">
+            <form method="POST" action="modes/register.php" class="form" id="register">
               <h1 class="form__title">Register</h1>
               <div class="form__input-group">
                 <label for="username"> Username: </label>

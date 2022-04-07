@@ -13,9 +13,6 @@ if (!isset($_SESSION["admin"])) {
 }
 
 
-require_once("php/db_connect.php");
-$result = $connect->query("SELECT * FROM users WHERE id='{$_SESSION['user']}'");
-
 ?>
 <!DOCTYPE html>
 <html lang="en">
@@ -26,7 +23,7 @@ $result = $connect->query("SELECT * FROM users WHERE id='{$_SESSION['user']}'");
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
   <link rel="stylesheet" href="css/main.css">
-  <link rel="stylesheet" href="css/login.css">
+  <link rel="stylesheet" href="css/mode.css">
 
   <link rel="shortcut icon" href="include/image/logo64x64.png">
   <link rel="preconnect" href="https://fonts.gstatic.com">
@@ -47,8 +44,8 @@ $result = $connect->query("SELECT * FROM users WHERE id='{$_SESSION['user']}'");
           <img alt="logo" src="images/Aro-logo-whitemode.png">
           <p>Admin Dashboard</p>
         </div>
-        <div class="menu-navigation">
-          <button class="btn-nav noselect">
+        <div class="menu-navigation" >
+          <button class="btn-nav noselect" onclick="location.replace('?mode=modes/admin/users');">
             <div class="nav-button">
               <div class="icon">
                 <i class="fas fa-users fa-lg"></i>
@@ -56,7 +53,7 @@ $result = $connect->query("SELECT * FROM users WHERE id='{$_SESSION['user']}'");
               <h2>Users</h2>
             </div>
           </button>
-          <button class="btn-nav">
+          <button class="btn-nav" onclick="location.replace('?mode=modes/admin/products');">
             <div class="nav-button">
               <div class="icon">
                 <i class="fas fa-list-ul fa-lg"></i>
@@ -64,7 +61,7 @@ $result = $connect->query("SELECT * FROM users WHERE id='{$_SESSION['user']}'");
               <h2>Products</h2>
             </div>
           </button>
-          <button class="btn-nav">
+          <button class="btn-nav" onclick="location.replace('?mode=modes/admin/categories');">
             <div class="nav-button">
               <div class="icon">
                 <i class="fas fa-list-ul fa-lg"></i>
@@ -72,7 +69,7 @@ $result = $connect->query("SELECT * FROM users WHERE id='{$_SESSION['user']}'");
               <h2>Categories</h2>
             </div>
           </button>
-          <button class="btn-nav">
+          <button class="btn-nav" onclick="location.replace('?mode=modes/admin/cproducers');">
             <div class="nav-button">
               <div class="icon">
                 <i class="fas fa-building fa-lg"></i>
@@ -80,7 +77,7 @@ $result = $connect->query("SELECT * FROM users WHERE id='{$_SESSION['user']}'");
               <h2>Producers</h2>
             </div>
           </button>
-          <button class="btn-nav" id="singOutBtn" onclick="location.replace('models/logout.php');">
+          <button class="btn-nav" id="singOutBtn" onclick="location.replace('modes/logout.php');">
             <div class="nav-button">
               <div class="icon">
                 <i class="fas fa-sign-out-alt fa-lg"></i>
@@ -95,27 +92,24 @@ $result = $connect->query("SELECT * FROM users WHERE id='{$_SESSION['user']}'");
         </div>
       </div>
 
+      <div id="right_products"> 
       <?php
-      while ($row = $result->fetch_object()) {
-        echo <<<html
-                          <tbody>
-                              <tr>
-                                  <td>$row->id</td>
-                                  <td>$row->type</td>
-                                  <td>$row->login</td>
-                                  <td>$row->password</td>
-                              </tr>
-                          </tbody>
-                      html;
-      }
-      
-      ?>
+      if(ISSET($_GET['mode'])){
+        if(FILE_EXISTS("{$_GET['mode']}.php")){
+            require_once("{$_GET['mode']}.php");}
+         
+        } else {
+          echo "<div>Plik został nie odnaleziony!</div><br>";
+        }
 
+      ?>
+      </div>
 
     </section>
   </main>
   <div class="circle1"></div>
   <div class="circle2"></div>
+  <script src="js/onscroll.js"></script>
 </body>
 
 </html>
