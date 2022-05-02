@@ -148,6 +148,7 @@ session_start();
         </div>
 
       </div>
+      <div id="right_products">
         <?php
 
         if (isset($_GET['mode'])) {
@@ -178,13 +179,14 @@ session_start();
           } echo "</div>";
         }
         ?>
-
+        </div>
       </div>
     </section>
   </main>
   <div class="circle1"></div>
   <div class="circle2"></div>
   <script src="js/signinup.js"></script>
+  <script src="js/onscroll.js"></script>
 </body>
 
 </html>

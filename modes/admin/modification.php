@@ -33,7 +33,9 @@ if ($_GET['mode'] == 'modes/admin/modification') {
 
             $querys="SELECT * FROM producer";
             $res=$connect->query($querys);
-            while($row=$res->fetch_object()) { echo "<option value='$row->id'>$row->producerName</option>"; }
+            while($ro=$res->fetch_object()) { 
+                if($ro->id == $row->producerID ){ echo "<option value='$ro->id' selected>$ro->producerName</option>";
+                }else echo "<option value='$ro->id'>$ro->producerName</option>";}
             
             echo <<<html
 
@@ -44,10 +46,9 @@ if ($_GET['mode'] == 'modes/admin/modification') {
 
             $querys="SELECT * FROM category";
             $res=$connect->query($querys);
-            while($row=$res->fetch_object()) { echo "<option value='$row->id'>$row->categoryName</option>";}
-            $query = "SELECT * FROM $table WHERE id='{$_GET['id']}'";
-            $result = $connect->query($query);
-            $row = $result->fetch_object();
+            while($ro=$res->fetch_object()) { 
+                if($ro->id == $row->categoryID ){ echo "<option value='$ro->id' selected>$ro->categoryName</option>";
+                }else echo "<option value='$ro->id'>$ro->categoryName</option>";}
 
             echo <<<html
                             </select><br>

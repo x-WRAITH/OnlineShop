@@ -1,10 +1,20 @@
+
 <div class="products">
         <div class="titleandsearch">
           <h1>Choose the perfect product for you!</h1>
-          <input type="text" /> 
+          
+          <form method="POST">
+            <input name="search" type="search" placeholder="Search..." autofocus required /> 
+          </form>
+            
+            
+          
         </div>
         <?php
-          $result = $connect->query("SELECT * FROM products ORDER BY RAND()");
+          if(isset($_POST['search'])){
+            $keyword = $_POST['search'];
+              $result = $connect->query("SELECT * FROM products WHERE name LIKE '%$keyword%'");
+          }else{$result = $connect->query("SELECT * FROM products ORDER BY RAND()");}
           while ($row = $result->fetch_object()) {
             echo <<< html
                 <div class="cards">
