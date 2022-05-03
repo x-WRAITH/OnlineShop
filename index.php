@@ -86,8 +86,8 @@ session_start();
             <form method="POST" class="form" id="login">
               <h1 class="form__title">Login</h1>
               <div class="form__input-group">
-                <label for="username">Username: </label>
-                <input type="text" class="form__input" name="login_log" id="username_log" maxlength="20" required>
+                <label for="username">E-mail: </label>
+                <input type="text" class="form__input" name="email_log" id="email_log" maxlength="20" required>
               </div>
               <div class="form__input-group">
                 <label for="pass">Password: </label>
@@ -100,7 +100,7 @@ session_start();
           </div>
           <?php
           if (isset($_POST['btnSignIn'])) {
-            $result = $connect->query("SELECT * FROM users WHERE login='{$_POST["login_log"]}' AND password='{$_POST["pass_log"]}'");
+            $result = $connect->query("SELECT * FROM users WHERE email='{$_POST["email_log"]}' AND password='{$_POST["pass_log"]}'");
             $value = $result->num_rows;
             if ($value == 1) {
               echo "Zalogowano";
@@ -121,8 +121,8 @@ session_start();
             <form method="POST" class="form" id="register">
               <h1 class="form__title">Register</h1>
               <div class="form__input-group">
-                <label for="username"> Username: </label>
-                <input type="text" class="form__input_" name="username_reg" id="username_reg" maxlength="20" required>
+                <label for="username"> E-mail: </label>
+                <input type="text" class="form__input_" name="email_reg" id="email_reg" maxlength="20" required>
               </div>
               <div class="form__input-group">
                 <label for="pass">Password: </label>
@@ -131,6 +131,21 @@ session_start();
               <button name="btnSignUp" class="form__button" type="submit">Sign Up</button>
             </form>
           </div>
+          <?php
+          if (isset($_POST['btnSignUp'])) {
+            $result = $connect->query("SELECT * FROM users WHERE email='{$_POST['email_reg']}'");
+            if($result==1){  
+              $connect->query("INSERT INTO users ( email, password ) VALUES ( '{$_POST['email_reg']}', '{$_POST['pass_reg']}' )");
+              echo "<script>alert('ZAREJESTROWANO);</script>";
+             }else{  
+              echo '<script>alert("EMAIL ZAJETY");
+              signInBtn.onclick = function() {
+                modal.style.display = "flex";}
+              </script>';
+
+             }  
+          } 
+          ?>
           <div class="overlay-container">
             <div class="overlay">
               <div class="overlay-panel overlay-left">
