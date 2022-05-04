@@ -84,7 +84,7 @@ if (!isset($_SESSION["admin"])) {
               </div>
               <h2>Sign Out</h2>
             </div>
-            </a>
+          </button>
         </div>
         <div class="copyright">
           <h2>Copyright © 2022</h2>

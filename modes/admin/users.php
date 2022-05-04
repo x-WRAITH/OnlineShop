@@ -24,8 +24,8 @@ if(ISSET($_GET['submode'])){
             <tr>
                 <td>ID</td>
                 <td>Type</td>
-                <td>Password</td>
                 <td>Email</td>
+                <td>Password</td>
                 <td colspan="2">Management</td>
             </tr>
         </thead>
@@ -37,8 +37,8 @@ if(ISSET($_GET['submode'])){
                 <tr>
                     <td>$row->id</td>
                     <td>$row->type</td>
-                    <td>$row->password</td>
                     <td>$row->email</td>
+                    <td>$row->password</td>
                     <td><a href='admin.php?mode=modes/admin/modification&id={$row->id}&name=users'>Modification</a></td>
                     <td><a href='admin.php?mode=modes/admin/delete&id={$row->id}&name=users' onclick="return confirm('Czy na pewno chcesz usunąć?')">Delete</a></td>
                 </tr>

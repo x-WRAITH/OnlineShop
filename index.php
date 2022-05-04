@@ -38,6 +38,21 @@ session_start();
           <p>Sklep Ziolowy</p>
         </div>
         <div class="menu-navigation">
+          <?php
+            if(isset($_SESSION["user"]) || isset($_SESSION["admin"])){
+                $result=$connect->query("SELECT * FROM users WHERE id= $_SESSION['user']");
+                echo <<< html
+                  <button class="btn-nav noselect" onclick="location.replace('?mode=modes/user');">
+                    <div class="nav-button">
+                      <div class="icon">
+                        <i class="fas fa-shopping-cart fa-lg"></i>
+                      </div>
+                html;
+                while($row=$result->fetch_object()) { echo "<h2>Hi, $row->firstname</h2>"; }
+                echo "</div></button>";
+                
+            }
+          ?>  
           <button class="btn-nav noselect">
             <div class="nav-button">
               <div class="icon">
@@ -61,15 +76,33 @@ session_start();
               </div>
               <h2>Contact</h2>
             </div>
-          </button>
-          <button class="btn-nav" id="signInBtn">
-            <div class="nav-button">
-              <div class="icon">
-                <i class="fas fa-sign-in-alt fa-lg"></i>
-              </div>
-              <h2>Sign In</h2>
-            </div>
-            </a>
+            </button>
+          <?php
+          if(!isset($_SESSION["user"]))
+          {
+            echo <<< html
+              <button class="btn-nav" id="signInBtn">
+                <div class="nav-button">
+                  <div class="icon">
+                    <i class="fas fa-sign-in-alt fa-lg"></i>
+                  </div>
+                  <h2>Sign In</h2>
+                </div>
+              </button>
+            html;
+          } else {
+            echo<<<html
+              <button class="btn-nav" id="singOutBtn" onclick="location.replace('modes/logout.php');">
+                <div class="nav-button">
+                  <div class="icon">
+                    <i class="fas fa-sign-out-alt fa-lg"></i>
+                  </div>
+                  <h2>Sign Out</h2>
+                </div>
+              </button>
+            html;
+          }
+          ?>
         </div>
         <div class="copyright">
           <h2>Copyright © 2022</h2>
@@ -111,6 +144,7 @@ session_start();
                 header('Location: admin.php');
               } else {
                 $_SESSION["user"] = $userType['id'];
+                echo "<script>console.log({$_SESSION["user"]});</script>";
               }
             } else {echo "<script>alert('Not logged in! The data is incorrect');</script>";}
           } 
