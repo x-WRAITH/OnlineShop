@@ -24,7 +24,6 @@ if(ISSET($_GET['submode'])){
             <tr>
                 <td>ID</td>
                 <td>Type</td>
-                <td>Login</td>
                 <td>Password</td>
                 <td>Email</td>
                 <td colspan="2">Management</td>
@@ -38,7 +37,6 @@ if(ISSET($_GET['submode'])){
                 <tr>
                     <td>$row->id</td>
                     <td>$row->type</td>
-                    <td>$row->login</td>
                     <td>$row->password</td>
                     <td>$row->email</td>
                     <td><a href='admin.php?mode=modes/admin/modification&id={$row->id}&name=users'>Modification</a></td>

@@ -118,7 +118,7 @@ if ($_GET['mode'] == 'modes/admin/modification') {
 
             if (isset($_POST['submit'])) {
                 if (isset($_POST['Type'])) { $typee=1; } else { $typee=0; }
-                $mod= "UPDATE $table SET type='{$typee}', login='{$_POST['Login']}', password='{$_POST['Password']}', firstname='{$_POST['Firstname']}', lastname='{$_POST['Lastname']}', email='{$_POST['Email']}', phone='{$_POST['Phone']}', shippingAddress='{$_POST['shippingAddress']}', shippingCity='{$_POST['shippingCity']}', shippingPincode='{$_POST['shippingPincode']}' WHERE id='{$_GET['id']}'";
+                $mod= "UPDATE $table SET type='{$typee}', password='{$_POST['Password']}', firstname='{$_POST['Firstname']}', lastname='{$_POST['Lastname']}', email='{$_POST['Email']}', phone='{$_POST['Phone']}', shippingAddress='{$_POST['shippingAddress']}', shippingCity='{$_POST['shippingCity']}', shippingPincode='{$_POST['shippingPincode']}' WHERE id='{$_GET['id']}'";
                 $connect->query($mod);
                 header("Location: admin.php?mode=modes/admin/users");
             }
@@ -133,16 +133,14 @@ if ($_GET['mode'] == 'modes/admin/modification') {
                 echo '<input type="checkbox" id="type" name="Type" checked>';
             } else {echo '<input type="checkbox" id="type" name="Type">';}
             echo <<<html
-                        <label for="Login">Login</label>
-                            <input type="text" name="Login" value="$row->login"><br>
+                        <label for="Email">Email</label>
+                            <input type="text" name="Email" value="$row->email"><br>
                         <label for="Password">Password</label>
                             <input type="text" name="Password" value="$row->password"><br>
                         <label for="Firstname">Firstname</label>
                             <input type="text" name="Firstname" value="$row->firstname"><br>
                         <label for="Lastname">Lastname</label>
                             <input type="text" name="Lastname" value="$row->lastname"><br>
-                        <label for="Email">Email</label>
-                            <input type="text" name="Email" value="$row->email"><br>
                         <label for="Phone">Phone</label>
                             <input type="number" name="Phone" value="$row->phone" maxlength="9"><br>
                         <label for="shippingAddress">Shipping Address</label>
