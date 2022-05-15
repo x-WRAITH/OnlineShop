@@ -5,7 +5,7 @@ if (!isset($_SESSION["admin"])) {
     echo "<script>location.replace('index.php')</script>";
     exit();
 }
-require("./php/db_connect.php");
+require_once("./php/db_connect.php");
 if($_GET['mode']=='modes/admin/delete')
 {
     if(isset($_GET["name"])) {

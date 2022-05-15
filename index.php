@@ -40,12 +40,13 @@ session_start();
         <div class="menu-navigation">
           <?php
             if(isset($_SESSION["user"]) || isset($_SESSION["admin"])){
-                $result=$connect->query("SELECT * FROM users WHERE id= $_SESSION['user']");
+                $id = $_SESSION["user"];
+                $result=$connect->query("SELECT * FROM users WHERE id={$id}");
                 echo <<< html
                   <button class="btn-nav noselect" onclick="location.replace('?mode=modes/user');">
                     <div class="nav-button">
                       <div class="icon">
-                        <i class="fas fa-shopping-cart fa-lg"></i>
+                        <i class="fas fa-user fa-lg"></i>
                       </div>
                 html;
                 while($row=$result->fetch_object()) { echo "<h2>Hi, $row->firstname</h2>"; }
@@ -145,6 +146,7 @@ session_start();
               } else {
                 $_SESSION["user"] = $userType['id'];
                 echo "<script>console.log({$_SESSION["user"]});</script>";
+                header("Location: index.php"); 
               }
             } else {echo "<script>alert('Not logged in! The data is incorrect');</script>";}
           } 
@@ -236,6 +238,7 @@ session_start();
   <div class="circle2"></div>
   <script src="js/signinup.js"></script>
   <script src="js/onscroll.js"></script>
+  <script src="js/function.js"></script>
 </body>
 
 </html>

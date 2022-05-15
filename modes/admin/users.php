@@ -9,7 +9,7 @@ if (!isset($_SESSION["admin"])) {
     echo "<script>location.replace('index.php')</script>";
     exit();
 }
-require("./php/db_connect.php");
+require_once("./php/db_connect.php");
 if(ISSET($_GET['submode'])){
     if($_GET['submode']=='id'){
     $q="SELECT * FROM users WHERE id='{$_GET['id']}'";

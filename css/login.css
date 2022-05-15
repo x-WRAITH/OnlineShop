@@ -13,7 +13,7 @@
     margin: 20px 0 30px;
 }
 
-button {
+.form button {
     border-radius: 20px;
     border: 2px solid #426696;
     background-color: #426696;
@@ -26,20 +26,20 @@ button {
     transition: transform 80ms ease-in;
 }
 
-button:active {
+.form button:active {
     transform: scale(0.95);
 }
 
-button:focus {
+.form button:focus {
     outline: none;
 }
 
-button.ghost {
+.form button.ghost {
     background-color: transparent;
     border-color: #FFFFFF;
 }
 
-form {
+.form {
     background-color: #FFFFFF;
     display: flex;
     align-items: center;
@@ -54,7 +54,7 @@ form {
     color: #426696;
 }
 
-input {
+.form input {
     background-color: #eee;
     border: none;
     padding: 12px 15px;
