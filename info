@@ -7,4 +7,8 @@ if($_GET['submode']=='id, producerName'){
     }
 
     nie potrzebne $q gdzie jest id i producername np wskazywane skoro ma wyswietlac wszystko XD
+<<<<<<< HEAD
     zrobic to na podstawie mode/admin/products.php ;)
+=======
+    zrobic to na podstawie mode/admin/products.php 
+>>>>>>> 6726200973f071de5b9767fcc18f3884a714d8e2
