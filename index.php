@@ -25,7 +25,7 @@ session_start();
   <script src="https://kit.fontawesome.com/a076d05399.js" crossorigin="anonymous"></script>
 
 
-  <title>AroShop - Sklep ziolowy</title>
+  <title>AroShop - Herbal Shop</title>
 
 </head>
 
@@ -35,7 +35,7 @@ session_start();
       <div class="dashboard">
         <div id="shopinformation">
           <img alt="logo" src="images/Aro-logo-whitemode.png">
-          <p>Sklep Ziolowy</p>
+          <p>Herbal Shop</p>
         </div>
         <div class="menu-navigation">
           <?php
@@ -129,7 +129,7 @@ session_start();
         <div class="container" id="container">
           <!-- sign in page -->
           <div class="form-container sign-in-container">
-            <form method="POST" class="form" id="login">
+            <form method="POST" class="formlr" id="login">
               <h1 class="form__title">Login</h1>
               <div class="form__input-group">
                 <label for="username">E-mail: </label>
@@ -166,7 +166,7 @@ session_start();
 
           <!--  create account page -->
           <div class="form-container sign-up-container">
-            <form method="POST" class="form" id="register">
+            <form method="POST" class="formlr" id="register">
               <h1 class="form__title">Register</h1>
               <div class="form__input-group">
                 <label for="username"> E-mail: </label>
@@ -223,21 +223,28 @@ session_start();
           <div class="products">
           <div class="titleandsearch">
             <h1>The most recommended product!</h1>
-            <!-- <input type="text" /> -->
           </div>
           html;
           $result = $connect->query("SELECT * FROM products ORDER BY RAND() LIMIT 3");
           while ($row = $result->fetch_object()) {
+            $out = strlen($row->description) > 50 ? substr($row->description,0,50)."... <a href='index.php?mode=modes/product&id={$row->id}'>see more..</a>" : $row->description;
             echo <<< html
-                <div class="cards">
-                  <div class="card">
-                    <img src="$row->image1" alt="" />
-                    <div class="card-info">
-                      <h2 style="">$row->name</h2>
-                      <p>$row->description</p>
-                    </div>
-                    <h2 class="price">$$row->price</h2>
+              <div class="cards">
+                <div class="card">
+                  <img src="$row->image1" alt="" />
+                  <div class="card-info">
+                    <h2 style="">$row->name</h2>
+                    <p>$out</p>
                   </div>
+                  <form method="POST" style="all: none;">
+                    <input type="hidden" name="hidden_name" value="$row->name" />
+                    <input type="hidden" name="hidden_price" value="$row->price" />
+                    <input type="hidden" name="hidden_id" value="$row->id" />
+                    <h2 class="price">$$row->price</h2>
+                    <input type="text" name="quantity" value="1" class="form-control" />
+                    <input type="submit" name="add_to_cart" style="margin-top:5px;" class="btn btn-success" value="Add to Cart" />  
+                  </form>
+                </div>
               html;
           } echo "</div>";
         }

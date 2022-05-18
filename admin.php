@@ -32,7 +32,7 @@ if (!isset($_SESSION["admin"])) {
   <script src="https://kit.fontawesome.com/a076d05399.js" crossorigin="anonymous"></script>
 
 
-  <title>AroShop - Sklep ziolowy</title>
+  <title>AroShop - Herbal Shop</title>
 
 </head>
 

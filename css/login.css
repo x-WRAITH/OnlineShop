@@ -13,7 +13,7 @@
     margin: 20px 0 30px;
 }
 
-.form button {
+.formlr button {
     border-radius: 20px;
     border: 2px solid #426696;
     background-color: #426696;
@@ -26,20 +26,20 @@
     transition: transform 80ms ease-in;
 }
 
-.form button:active {
+.formlr button:active {
     transform: scale(0.95);
 }
 
-.form button:focus {
+.formlr button:focus {
     outline: none;
 }
 
-.form button.ghost {
+.formlr button.ghost {
     background-color: transparent;
     border-color: #FFFFFF;
 }
 
-.form {
+.formlr {
     background-color: #FFFFFF;
     display: flex;
     align-items: center;
@@ -54,7 +54,7 @@
     color: #426696;
 }
 
-.form input {
+.formlr input {
     background-color: #eee;
     border: none;
     padding: 12px 15px;
