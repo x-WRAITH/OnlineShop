@@ -4,8 +4,8 @@
     --gramyse-dark-gray: #0a0f16;
 }
 
-a:link,
-a:visited {
+#msform a:link,
+#msform a:visited {
     background-color: var(--gramyse-color);
     border: none;
     color: #FFFFFF;
@@ -19,8 +19,8 @@ a:visited {
     display: inline-block;
 }
 
-a:hover,
-a:active {
+#msform a:hover,
+#msform a:active {
     background: linear-gradient(to right top, #40a567, #4182bf);
 }
 
