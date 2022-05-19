@@ -17,6 +17,7 @@ session_start();
   <link rel="stylesheet" href="css/main.css">
   <link rel="stylesheet" href="css/login.css">
   <link rel="stylesheet" href="css/mode.css">
+  <link rel="stylesheet" href="css/alerts.css">
 
   <link rel="shortcut icon" href="include/image/logo64x64.png">
   <link rel="preconnect" href="https://fonts.gstatic.com">
@@ -29,7 +30,83 @@ session_start();
 
 </head>
 
+<?php
+if (isset($_POST['btnSignIn'])) {
+  $result = $connect->query("SELECT * FROM users WHERE email='{$_POST["email_log"]}' AND password='{$_POST["pass_log"]}'");
+  $value = $result->num_rows;
+  if ($value == 1) {
+    echo "Zalogowano";
+    $userType = $result->fetch_assoc();
+    if ($userType['type'] == 1) {
+      $_SESSION["user"] = $userType['id'];
+      $_SESSION["admin"] = true;
+      header('Location: index.php');
+    } else {
+      $_SESSION["user"] = $userType['id'];
+      echo "<script>console.log({$_SESSION["user"]});</script>";
+      header("Location: index.php");
+    }
+  } else {
+    echo <<<html
+    <script>
+    const alert = document.querySelector(".showAlerts");
+    alert.innerHTML = '
+    <div class="alert error">
+      <input type="checkbox" id="alert1"/>
+      <label class="close" title="close" for="alert1">
+        x
+      </label>
+      <p class="inner">
+        <strong>Warning!</strong> Given email or password is not correct!
+      </p>
+    </div>';
+    html;
+    header("Location: index.php");
+  }
+}
+
+if (isset($_POST['btnSignUp'])) {
+  $result = $connect->query("SELECT * FROM users WHERE email='{$_POST['email_reg']}'");
+  $row = $result->fetch_object();
+  if (!($row->email == $_POST['email_reg'])) {
+    $connect->query("INSERT INTO users ( email, password ) VALUES ( '{$_POST['email_reg']}', '{$_POST['pass_reg']}' )");
+    echo `<script>
+              const alert = document.querySelector(".showAlerts");
+	            alert.innerHTML = '
+              <div class="alert success">
+		            <input type="checkbox" id="alert1"/>
+                <label class="close" title="close" for="alert1">
+                  x
+                </label>
+		            <p class="inner">
+			            <strong>Success!</strong> Your account has been created! You can log in.
+		            </p>
+	            </div>'';
+              `;
+    header("Location: index.php");
+  } else {
+    echo `
+              <script>
+              const alert = document.querySelector(".showAlerts");
+	            alert.innerHTML = '
+              <div class="alert error">
+		            <input type="checkbox" id="alert1"/>
+                <label class="close" title="close" for="alert1">
+                  x
+                </label>
+		            <p class="inner">
+			            <strong>Warning!</strong> Given email is already taken!
+		            </p>
+	            </div>';
+              `;
+
+    header("Location: index.php");
+  }
+}
+?>
+
 <body>
+  <div class="showAlerts"></div>
   <main>
     <section class="shop">
       <div class="dashboard">
@@ -39,8 +116,8 @@ session_start();
         </div>
         <div class="menu-navigation">
           <?php
-            if(isset($_SESSION["admin"])){
-              echo <<< html
+          if (isset($_SESSION["admin"])) {
+            echo <<< html
                 <button class="btn-nav noselect" onclick="location.replace('admin.php');">
                   <div class="nav-button">
                     <div class="icon">
@@ -50,22 +127,23 @@ session_start();
                   </div>
                 </button>
               html;
-            }
-            if(isset($_SESSION["user"])){
-                $id = $_SESSION["user"];
-                $result=$connect->query("SELECT * FROM users WHERE id={$id}");
-                echo <<< html
+          }
+          if (isset($_SESSION["user"])) {
+            $id = $_SESSION["user"];
+            $result = $connect->query("SELECT * FROM users WHERE id={$id}");
+            echo <<< html
                   <button class="btn-nav noselect" onclick="location.replace('?mode=modes/user');">
                     <div class="nav-button">
                       <div class="icon">
                         <i class="fas fa-user fa-lg"></i>
                       </div>
                 html;
-                while($row=$result->fetch_object()) { echo "<h2>Hi, $row->firstname</h2>"; }
-                echo "</div></button>";
-                
+            while ($row = $result->fetch_object()) {
+              echo "<h2>Hi, $row->firstname</h2>";
             }
-          ?>  
+            echo "</div></button>";
+          }
+          ?>
           <button class="btn-nav noselect">
             <div class="nav-button">
               <div class="icon">
@@ -89,10 +167,9 @@ session_start();
               </div>
               <h2>Contact</h2>
             </div>
-            </button>
+          </button>
           <?php
-          if(!isset($_SESSION["user"]))
-          {
+          if (!isset($_SESSION["user"])) {
             echo <<< html
               <button class="btn-nav" id="signInBtn">
                 <div class="nav-button">
@@ -104,7 +181,7 @@ session_start();
               </button>
             html;
           } else {
-            echo<<<html
+            echo <<<html
               <button class="btn-nav" id="singOutBtn" onclick="location.replace('modes/logout.php');">
                 <div class="nav-button">
                   <div class="icon">
@@ -122,7 +199,6 @@ session_start();
           <!-- <img src="" alt="" />-->
         </div>
       </div>
-
       <div id="myModal" class="modal">
 
 
@@ -133,7 +209,7 @@ session_start();
               <h1 class="form__title">Login</h1>
               <div class="form__input-group">
                 <label for="username">E-mail: </label>
-                <input type="text" class="form__input" name="email_log" id="email_log" maxlength="20" required>
+                <input type="email" class="form__input" placeholder="e.g. wojteknowak02@gmail.com" name="email_log" id="email_log" maxlength="20" required>
               </div>
               <div class="form__input-group">
                 <label for="pass">Password: </label>
@@ -144,33 +220,13 @@ session_start();
               </div>
             </form>
           </div>
-          <?php
-          if (isset($_POST['btnSignIn'])) {
-            $result = $connect->query("SELECT * FROM users WHERE email='{$_POST["email_log"]}' AND password='{$_POST["pass_log"]}'");
-            $value = $result->num_rows;
-            if ($value == 1) {
-              echo "Zalogowano";
-              $userType = $result->fetch_assoc();
-              if ($userType['type'] == 1) {
-                $_SESSION["user"] = $userType['id'];
-                $_SESSION["admin"] = true;
-                header('Location: index.php');
-              } else {
-                $_SESSION["user"] = $userType['id'];
-                echo "<script>console.log({$_SESSION["user"]});</script>";
-                header("Location: index.php"); 
-              }
-            } else {echo "<script>alert('Not logged in! The data is incorrect');</script>";}
-          } 
-          ?>
-
           <!--  create account page -->
           <div class="form-container sign-up-container">
             <form method="POST" class="formlr" id="register">
               <h1 class="form__title">Register</h1>
               <div class="form__input-group">
                 <label for="username"> E-mail: </label>
-                <input type="text" class="form__input_" name="email_reg" id="email_reg" maxlength="20" required>
+                <input type="email" class="form__input_" placeholder="e.g. wojteknowak02@gmail.com" name="email_reg" id="email_reg" maxlength="20" required>
               </div>
               <div class="form__input-group">
                 <label for="pass">Password: </label>
@@ -179,21 +235,6 @@ session_start();
               <button name="btnSignUp" class="form__button" type="submit">Sign Up</button>
             </form>
           </div>
-          <?php
-          if (isset($_POST['btnSignUp'])) {
-            $result = $connect->query("SELECT * FROM users WHERE email='{$_POST['email_reg']}'");
-            if($result==1){  
-              $connect->query("INSERT INTO users ( email, password ) VALUES ( '{$_POST['email_reg']}', '{$_POST['pass_reg']}' )");
-              echo "<script>alert('ZAREJESTROWANO);</script>";
-             }else{  
-              echo '<script>alert("EMAIL ZAJETY");
-              signInBtn.onclick = function() {
-                modal.style.display = "flex";}
-              </script>';
-
-             }  
-          } 
-          ?>
           <div class="overlay-container">
             <div class="overlay">
               <div class="overlay-panel overlay-left">
@@ -212,6 +253,7 @@ session_start();
 
       </div>
       <div id="right_products">
+
         <?php
 
         if (isset($_GET['mode'])) {
@@ -227,7 +269,7 @@ session_start();
           html;
           $result = $connect->query("SELECT * FROM products ORDER BY RAND() LIMIT 3");
           while ($row = $result->fetch_object()) {
-            $out = strlen($row->description) > 50 ? substr($row->description,0,50)."... <a href='index.php?mode=modes/product&id={$row->id}'>see more..</a>" : $row->description;
+            $out = strlen($row->description) > 50 ? substr($row->description, 0, 50) . "... <a href='index.php?mode=modes/product&id={$row->id}'>see more..</a>" : $row->description;
             echo <<< html
               <div class="cards">
                 <div class="card">
@@ -246,10 +288,11 @@ session_start();
                   </form>
                 </div>
               html;
-          } echo "</div>";
+          }
+          echo "</div>";
         }
         ?>
-        </div>
+      </div>
       </div>
     </section>
   </main>
