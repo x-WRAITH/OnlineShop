@@ -3,6 +3,25 @@
 //      GramySe.pl       //
 //######################-->
 <?php
+    if(isset($_POST['add_to_cart'])){
+        $d=0;
+        if(is_array($_COOKIE['products'])){
+            foreach($_COOKIE['products'] as $key => $value){
+                $d=$d+1;
+            }
+            $d=$d+1;
+        }else{
+            $d=$d+1;
+        }
+            $product_id = $_POST["hidden_id"];
+            $product_name = $_POST["hidden_name"];
+            $product_price = $_POST["hidden_price"];
+            $product_quantity = $_POST["quantity"];
+           setcookie("products[$d]",$product_id."__".$product_name."__".$product_price."__".$product_quantity, time()+1800);
+    }
+
+
+
     $result = $connect->query("SELECT * FROM products WHERE id='{$_GET['id']}'");
     while ($row = $result->fetch_object()) {
     echo <<< html
@@ -24,7 +43,7 @@
                     <input type="hidden" name="hidden_price" value="$row->price" />
                     <input type="hidden" name="hidden_id" value="$row->id" />
                     <input type="number" name="quantity" value="1" max="$row->amount" class="form-control" />
-                    <input type="submit" name="add_to_cart" style="margin-top:5px;" class="btn btn-success" value="Add to Cart" />  
+                    <input type="submit" name="add_to_cart" style="margin-top:5px;" value="Add to Cart" />  
                 </form>
             </div>
         html;
@@ -42,4 +61,3 @@
         }
     }
 
-?>

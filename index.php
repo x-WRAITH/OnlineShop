@@ -103,7 +103,7 @@ if (isset($_POST['btnSignUp'])) {
             echo "</div></button>";
           }
           ?>
-                    <button class="btn-nav noselect">
+                    <button class="btn-nav noselect" onclick="location.replace('?mode=modes/cart');">
                         <div class="nav-button">
                             <div class="icon">
                                 <i class="fas fa-shopping-cart fa-lg"></i>

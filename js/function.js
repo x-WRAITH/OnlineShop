@@ -10,6 +10,3 @@ function showPassowrd() {
       x.type = "password";
     }
 }
-let select = document.querySelector("#sorts");
-let form = document.querySelector("#search-form");
-select.onselect=()=>form.submit();
