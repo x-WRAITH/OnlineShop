@@ -35,11 +35,16 @@ if (isset($_POST['btnSignIn'])) {
   $result = $connect->query("SELECT * FROM users WHERE email='{$_POST["email_log"]}' AND password='{$_POST["pass_log"]}'");
   $value = $result->num_rows;
   if ($value == 1) {
+<<<<<<< HEAD
     echo '<script>alert("Success! Logged in.");</script>';
+=======
+    echo "Zalogowano";
+>>>>>>> aaef8fa7d98f4d01c3e582957432df4c39156bd2
     $userType = $result->fetch_assoc();
     if ($userType['type'] == 1) {
       $_SESSION["user"] = $userType['id'];
       $_SESSION["admin"] = true;
+<<<<<<< HEAD
       header("Location: index.php");
     } else {
       $_SESSION["user"] = $userType['id'];
@@ -48,11 +53,36 @@ if (isset($_POST['btnSignIn'])) {
   } else {
     header("Location: index.php");
     echo '<script>alert("Warning! Given email or password is not correct!");</script>';
+=======
+      header('Location: index.php');
+    } else {
+      $_SESSION["user"] = $userType['id'];
+      echo "<script>console.log({$_SESSION["user"]});</script>";
+      header("Location: index.php");
+    }
+  } else {
+    echo <<<html
+    <script>
+    const alert = document.querySelector(".showAlerts");
+    alert.innerHTML = '
+    <div class="alert error">
+      <input type="checkbox" id="alert1"/>
+      <label class="close" title="close" for="alert1">
+        x
+      </label>
+      <p class="inner">
+        <strong>Warning!</strong> Given email or password is not correct!
+      </p>
+    </div>';
+    html;
+    header("Location: index.php");
+>>>>>>> aaef8fa7d98f4d01c3e582957432df4c39156bd2
   }
 }
 
 if (isset($_POST['btnSignUp'])) {
   $result = $connect->query("SELECT * FROM users WHERE email='{$_POST['email_reg']}'");
+<<<<<<< HEAD
   $value = $result->num_rows;
   if ($value==0) {
     $connect->query("INSERT INTO users ( email, password ) VALUES ( '{$_POST['email_reg']}', '{$_POST['pass_reg']}' )");
@@ -60,13 +90,52 @@ if (isset($_POST['btnSignUp'])) {
     header("Location: index.php");
   } else {
     echo '<script>alert("Warning! Given email is already taken!");</script>';
+=======
+  $row = $result->fetch_object();
+  if (!($row->email == $_POST['email_reg'])) {
+    $connect->query("INSERT INTO users ( email, password ) VALUES ( '{$_POST['email_reg']}', '{$_POST['pass_reg']}' )");
+    echo `<script>
+              const alert = document.querySelector(".showAlerts");
+	            alert.innerHTML = '
+              <div class="alert success">
+		            <input type="checkbox" id="alert1"/>
+                <label class="close" title="close" for="alert1">
+                  x
+                </label>
+		            <p class="inner">
+			            <strong>Success!</strong> Your account has been created! You can log in.
+		            </p>
+	            </div>'';
+              `;
+    header("Location: index.php");
+  } else {
+    echo `
+              <script>
+              const alert = document.querySelector(".showAlerts");
+	            alert.innerHTML = '
+              <div class="alert error">
+		            <input type="checkbox" id="alert1"/>
+                <label class="close" title="close" for="alert1">
+                  x
+                </label>
+		            <p class="inner">
+			            <strong>Warning!</strong> Given email is already taken!
+		            </p>
+	            </div>';
+              `;
+
+>>>>>>> aaef8fa7d98f4d01c3e582957432df4c39156bd2
     header("Location: index.php");
   }
 }
 ?>
 
 <body>
+<<<<<<< HEAD
 <div class="showAlerts"></div>
+=======
+  <div class="showAlerts"></div>
+>>>>>>> aaef8fa7d98f4d01c3e582957432df4c39156bd2
   <main>
     <section class="shop">
       <div class="dashboard">
