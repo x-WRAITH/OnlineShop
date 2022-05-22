@@ -51,19 +51,19 @@ if (!isset($_SESSION["user"]) ) {
     html;   
     }
     if (isset($_POST['submit_dataChange'])) {
-        
-        // $sql = "SELECT * FROM users WHERE email=";
-        // $res = pg_query($sql);
-        // if( pg_num_rows($res) > 0 )
-
-
-        
-        // $mod= "UPDATE users SET categoryName='{$_POST['Name']}' WHERE id='{$_GET['id']}'";
-        // $connect->query($mod);
-        echo "<meta http-equiv='refresh' content='0'>";
+        $result = $connect->query("SELECT * FROM users WHERE email='{$_POST['Email']}' AND id!='{$_SESSION['user']}'");
+        $value = $result->num_rows;
+        if ($value==0){
+            $connect->query("UPDATE users SET email='{$_POST['Email']}', password='{$_POST['Password']}', firstname='{$_POST['Firstname']}', lastname='{$_POST['Lastname']}', phone='{$_POST['Phone']}' WHERE id='{$_SESSION['user']}'");
+            echo "<meta http-equiv='refresh' content='0'>";
+            echo '<script>alert("Success! The data has been changed!");</script>';
+        }else{
+            echo '<script>alert("Warning! Given email is already taken!");</script>';
+        }
     }
     if(isset($_POST['submit_addressChange'])){
-        $connect->query("UPDATE users SET shippingAddress='{$_POST['shippingAddress']}', shippingCity='{$_POST['shippingCity']}', shippingPincode='{$_POST['shippingPincode']}' WHERE id={$_SESSION['user']}");
+        $connect->query("UPDATE users SET shippingAddress='{$_POST['shippingAddress']}', shippingCity='{$_POST['shippingCity']}', shippingPincode='{$_POST['shippingPincode']}' WHERE id='{$_SESSION['user']}'");
         echo "<meta http-equiv='refresh' content='0'>";
+        echo '<script>alert("Success! The data has been changed!");</script>';
     }
 ?>

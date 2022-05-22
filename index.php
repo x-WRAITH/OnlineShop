@@ -35,78 +35,38 @@ if (isset($_POST['btnSignIn'])) {
   $result = $connect->query("SELECT * FROM users WHERE email='{$_POST["email_log"]}' AND password='{$_POST["pass_log"]}'");
   $value = $result->num_rows;
   if ($value == 1) {
-    echo "Zalogowano";
+    echo '<script>alert("Success! Logged in.");</script>';
     $userType = $result->fetch_assoc();
     if ($userType['type'] == 1) {
       $_SESSION["user"] = $userType['id'];
       $_SESSION["admin"] = true;
-      header('Location: index.php');
+      header("Location: index.php");
     } else {
       $_SESSION["user"] = $userType['id'];
-      echo "<script>console.log({$_SESSION["user"]});</script>";
       header("Location: index.php");
     }
   } else {
-    echo <<<html
-    <script>
-    const alert = document.querySelector(".showAlerts");
-    alert.innerHTML = '
-    <div class="alert error">
-      <input type="checkbox" id="alert1"/>
-      <label class="close" title="close" for="alert1">
-        x
-      </label>
-      <p class="inner">
-        <strong>Warning!</strong> Given email or password is not correct!
-      </p>
-    </div>';
-    html;
     header("Location: index.php");
+    echo '<script>alert("Warning! Given email or password is not correct!");</script>';
   }
 }
 
 if (isset($_POST['btnSignUp'])) {
   $result = $connect->query("SELECT * FROM users WHERE email='{$_POST['email_reg']}'");
-  $row = $result->fetch_object();
-  if (!($row->email == $_POST['email_reg'])) {
+  $value = $result->num_rows;
+  if ($value==0) {
     $connect->query("INSERT INTO users ( email, password ) VALUES ( '{$_POST['email_reg']}', '{$_POST['pass_reg']}' )");
-    echo `<script>
-              const alert = document.querySelector(".showAlerts");
-	            alert.innerHTML = '
-              <div class="alert success">
-		            <input type="checkbox" id="alert1"/>
-                <label class="close" title="close" for="alert1">
-                  x
-                </label>
-		            <p class="inner">
-			            <strong>Success!</strong> Your account has been created! You can log in.
-		            </p>
-	            </div>'';
-              `;
+    echo '<script>alert("Success! Your account has been created! You can log in.");</script>';
     header("Location: index.php");
   } else {
-    echo `
-              <script>
-              const alert = document.querySelector(".showAlerts");
-	            alert.innerHTML = '
-              <div class="alert error">
-		            <input type="checkbox" id="alert1"/>
-                <label class="close" title="close" for="alert1">
-                  x
-                </label>
-		            <p class="inner">
-			            <strong>Warning!</strong> Given email is already taken!
-		            </p>
-	            </div>';
-              `;
-
+    echo '<script>alert("Warning! Given email is already taken!");</script>';
     header("Location: index.php");
   }
 }
 ?>
 
 <body>
-  <div class="showAlerts"></div>
+<div class="showAlerts"></div>
   <main>
     <section class="shop">
       <div class="dashboard">

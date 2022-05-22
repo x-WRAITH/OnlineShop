@@ -19,7 +19,7 @@ if ($_GET['mode'] == 'modes/admin/modification') {
             $row = $result->fetch_object();
 
             if (isset($_POST['submit'])) {
-                $mod= "UPDATE products SET name='{$_POST['Name']}', producerID='{$_POST['Producer']}', categoryID='{$_POST['Category']}', price='{$_POST['Price']}', description='{$_POST['Description']}', amount='{$_POST['Amount']}' WHERE id='{$_GET['id']}'";
+                $mod= "UPDATE products SET name='{$_POST['Name']}', producerID='1', categoryID='{$_POST['Category']}', price='{$_POST['Price']}', description='{$_POST['Description']}', amount='{$_POST['Amount']}' WHERE id='{$_GET['id']}'";
                 $connect->query($mod);
                 header("Location: admin.php?mode=modes/admin/products");
             }
