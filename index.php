@@ -5,6 +5,11 @@
 <?php
 require_once('php/db_connect.php');
 session_start();
+error_reporting(0);
+if(!isset($_SESSION['cart_array'])){
+  $_SESSION['cart_array'] = array();
+  unset($_SESSION['quantity_array']);
+}
 ?>
 <!DOCTYPE html>
 <html lang="en">
@@ -103,12 +108,12 @@ if (isset($_POST['btnSignUp'])) {
             echo "</div></button>";
           }
           ?>
-                    <button class="btn-nav noselect">
+                    <button class="btn-nav noselect" onclick="location.replace('?mode=modes/cart');">
                         <div class="nav-button">
                             <div class="icon">
                                 <i class="fas fa-shopping-cart fa-lg"></i>
                             </div>
-                            <h2>Cart(<?php echo 5; ?>)</h2>
+                            <h2>Cart(<?php echo count($_SESSION['cart_array']); ?>)</h2>
                         </div>
                     </button>
                     <button class="btn-nav" onclick="location.replace('?mode=modes/products');">

@@ -14,13 +14,11 @@ if ($_GET['mode'] == 'modes/admin/modification') {
     if (isset($_GET["name"])) {
         if ($_GET["name"] == "products") {
             $table = "products";
-            $query = "SELECT * FROM $table WHERE id='{$_GET['id']}'";
-            $result = $connect->query($query);
+            $result = $connect->query("SELECT * FROM $table WHERE id='{$_GET['id']}'");
             $row = $result->fetch_object();
 
             if (isset($_POST['submit'])) {
-                $mod= "UPDATE products SET name='{$_POST['Name']}', producerID='1', categoryID='{$_POST['Category']}', price='{$_POST['Price']}', description='{$_POST['Description']}', amount='{$_POST['Amount']}' WHERE id='{$_GET['id']}'";
-                $connect->query($mod);
+                $connect->query("UPDATE products SET name='{$_POST['Name']}', producerID='{$_POST['Producer']}', categoryID='{$_POST['Category']}', price='{$_POST['Price']}', description='{$_POST['Description']}', amount='{$_POST['Amount']}' WHERE id='{$_GET['id']}'");
                 header("Location: admin.php?mode=modes/admin/products");
             }
 
@@ -35,8 +33,7 @@ if ($_GET['mode'] == 'modes/admin/modification') {
                             <select name="Producer">
             html;
 
-            $querys="SELECT * FROM producer";
-            $res=$connect->query($querys);
+            $res=$connect->query("SELECT * FROM producer");
             while($ro=$res->fetch_object()) { 
                 if($ro->id == $row->producerID ){ echo "<option value='$ro->id' selected>$ro->producerName</option>";
                 }else echo "<option value='$ro->id'>$ro->producerName</option>";}
@@ -48,8 +45,7 @@ if ($_GET['mode'] == 'modes/admin/modification') {
                             <select name="Category">
             html;
 
-            $querys="SELECT * FROM category";
-            $res=$connect->query($querys);
+            $res=$connect->query("SELECT * FROM category");
             while($ro=$res->fetch_object()) { 
                 if($ro->id == $row->categoryID ){ echo "<option value='$ro->id' selected>$ro->categoryName</option>";
                 }else echo "<option value='$ro->id'>$ro->categoryName</option>";}
@@ -71,13 +67,11 @@ if ($_GET['mode'] == 'modes/admin/modification') {
         } else 
         if ($_GET["name"] == "category") {
             $table = "category";
-            $query = "SELECT * FROM $table WHERE id='{$_GET['id']}'";
-            $result = $connect->query($query);
+            $result = $connect->query("SELECT * FROM $table WHERE id='{$_GET['id']}'");
             $row = $result->fetch_object();
 
-            if (isset($_POST['submit'])) {
-                $mod= "UPDATE category SET categoryName='{$_POST['Name']}' WHERE id='{$_GET['id']}'";
-                $connect->query($mod);
+            if (isset($_POST['submit'])){
+                $connect->query("UPDATE category SET categoryName='{$_POST['Name']}' WHERE id='{$_GET['id']}'");
                 header("Location: admin.php?mode=modes/admin/categories");
             }
 
@@ -93,13 +87,11 @@ if ($_GET['mode'] == 'modes/admin/modification') {
         } else 
         if ($_GET["name"] == "producer") {
             $table = "producer";
-            $query = "SELECT * FROM $table WHERE id='{$_GET['id']}'";
-            $result = $connect->query($query);
+            $result = $connect->query("SELECT * FROM $table WHERE id='{$_GET['id']}'");
             $row = $result->fetch_object();
 
             if (isset($_POST['submit'])) {
-                $mod= "UPDATE producer SET producerName='{$_POST['Name']}' WHERE id='{$_GET['id']}'";
-                $connect->query($mod);
+                $connect->query("UPDATE producer SET producerName='{$_POST['Name']}' WHERE id='{$_GET['id']}'");
                 header("Location: admin.php?mode=modes/admin/producers");
             }
 
@@ -116,14 +108,12 @@ if ($_GET['mode'] == 'modes/admin/modification') {
         if ($_GET["name"] == "users") {
             $table = "users";
             $typee=0;
-            $query = "SELECT * FROM $table WHERE id='{$_GET['id']}'";
-            $result = $connect->query($query);
+            $result = $connect->query("SELECT * FROM $table WHERE id='{$_GET['id']}'");
             $row = $result->fetch_object();
 
             if (isset($_POST['submit'])) {
                 if (isset($_POST['Type'])) { $typee=1; } else { $typee=0; }
-                $mod= "UPDATE $table SET type='{$typee}', password='{$_POST['Password']}', firstname='{$_POST['Firstname']}', lastname='{$_POST['Lastname']}', email='{$_POST['Email']}', phone='{$_POST['Phone']}', shippingAddress='{$_POST['shippingAddress']}', shippingCity='{$_POST['shippingCity']}', shippingPincode='{$_POST['shippingPincode']}' WHERE id='{$_GET['id']}'";
-                $connect->query($mod);
+                $connect->query("UPDATE $table SET type='{$typee}', password='{$_POST['Password']}', firstname='{$_POST['Firstname']}', lastname='{$_POST['Lastname']}', email='{$_POST['Email']}', phone='{$_POST['Phone']}', shippingAddress='{$_POST['shippingAddress']}', shippingCity='{$_POST['shippingCity']}', shippingPincode='{$_POST['shippingPincode']}' WHERE id='{$_GET['id']}'");
                 header("Location: admin.php?mode=modes/admin/users");
             }
 
