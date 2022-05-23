@@ -23,6 +23,9 @@ if(isset($_GET['action'])){
 		unset($_SESSION['cart_array']);
 		header("Location: ../index.php?mode=modes/cart");
 	}
+	if($_GET['action']=="order"){
+		header("Location: ../index.php?mode=modes/cart_order");
+	}
 }
 ?>
 <div class="products">
@@ -45,7 +48,7 @@ if(isset($_GET['action'])){
 			}
 		</style>
     <table id="cart">
-			<input type="submit" style="all: none;" name="save" value="Save Changes"/>
+			<input type="submit" style="all: none;" name="save" value="Save Cart"/>
 			<a href="modes/cart.php?action=clear">Clear Cart</a>
 				<thead>
 					<th></th>
@@ -71,10 +74,10 @@ if(isset($_GET['action'])){
 										<a href="modes/cart.php?action=removeitem&id=<?php echo $row->id; ?>&index=<?php echo $index; ?>"><i class="fas fa-ban"></i></a>
 									</td>
 									<td><?php echo $row->name; ?></td>
-									<td><?php echo $row->price; ?></td>
+									<td><?php echo $row->price."$"; ?></td>
 									<input type="hidden" name="indexes[]" value="<?php echo $index; ?>">
 									<td><input type="number" max="<?php echo $row->amount; ?>" value="<?php echo $_SESSION['quantity_array'][$index]; ?>" name="qty_<?php echo $index; ?>"></td>
-									<td><?php echo ($_SESSION['quantity_array'][$index]*$row->price); ?></td>
+									<td><?php echo ($_SESSION['quantity_array'][$index]*$row->price)."$"; ?></td>
 								</tr>
 								<?php
                                 $total += ($_SESSION['quantity_array'][$index]*$row->price);
@@ -84,7 +87,7 @@ if(isset($_GET['action'])){
 						else{
 							?>
 							<tr>
-								<td colspan="4" class="text-center">No Item in Cart</td>
+								<td colspan="4">No Item in Cart</td>
 							</tr>
 							<?php
 						}
@@ -98,4 +101,9 @@ if(isset($_GET['action'])){
     <div class="copyright">
         <h2 id="total">Total price: <?php echo $total . "$"; ?></h2>
     </div>
+	<?php
+			if(!empty($_SESSION['cart_array'])){
+				echo '<a href="modes/cart.php?action=order">Order Cart</a>';
+			}
+		?>
 </div>
