@@ -1,10 +1,50 @@
 <?php
+if(isset($_POST['submit_paymentyOrder'])){
+    $_SESSION['paymentyOrder'] = $_POST['Payment'];
+    $_SESSION['order'] = true;
+    header("Location: ../index.php?mode=modes/order");
+
+}
+if(isset($_POST['submit_deliveryOrder'])){
+    $_SESSION['deliveryOrder'] = $_POST['Delivery'];
+    echo '
+    <div class="paymentyOrder">
+        <form method="POST">
+            <label for="Payment">Payment</label>
+                <select name="Payment">
+                    <option value="Blik" seletecd>Blik</option>
+                    <option value="Ot">Online transfer</option>
+                    <option value="Cod">Cash on delivery</option>
+                </select>
+                <input type="submit" name="submit_paymentyOrder" value="Confirm the payment">
+        </form>
+    </div>
+    ';
+}
 if(isset($_POST['submit_addressOrder']))
 {
-    echo "adres git"; 
+    $_SESSION['shoppingAdress'] = $_POST['shippingAddress'];
+    $_SESSION['shippingCity'] = $_POST['shippingCity'];
+    $_SESSION['shippingPincode'] = $_POST['shippingPincode'];
+    echo '
+        <div class="deliveryOrder">
+            <form method="POST">
+                <label for="Delivery">Delivery</label>
+                    <select name="Delivery">
+                        <option value="14" seletecd>Inpost Delivery - 14$</option>
+                        <option value="18">DHL Delivery - 18$</option>
+                        <option value="20">DHL Delivery(Insured) - 55$</option>
+                    </select>
+                    <input type="submit" name="submit_deliveryOrder" value="Confirm the delivery">
+            </form>
+        </div>
+    ';
+    unset($_SESSION['shoppingAdress']);
+    unset($_SESSION['shippingCity']);
+    unset($_SESSION['shippingPincode']);
 }
 if(isset($_SESSION['user'])){
-    $result = $connect->query("SELECT * FROM users WHERE id='{$_SESSION['user']}'");
+    $result = $connect->query("SELECT shippingAddress, shippingCity, shippingPincode FROM users WHERE id='{$_SESSION['user']}'");
     while($row=$result->fetch_object())
     {
     echo <<< html
