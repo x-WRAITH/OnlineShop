@@ -1,11 +1,11 @@
 -- phpMyAdmin SQL Dump
--- version 5.1.1
+-- version 5.2.0
 -- https://www.phpmyadmin.net/
 --
 -- Host: 127.0.0.1
--- Czas generowania: 23 Maj 2022, 21:23
--- Wersja serwera: 10.4.21-MariaDB
--- Wersja PHP: 8.0.11
+-- Czas generowania: 27 Maj 2022, 12:25
+-- Wersja serwera: 10.4.24-MariaDB
+-- Wersja PHP: 8.1.6
 
 SET SQL_MODE = "NO_AUTO_VALUE_ON_ZERO";
 START TRANSACTION;
@@ -86,7 +86,7 @@ CREATE TABLE `products` (
   `producerID` int(11) NOT NULL,
   `categoryID` int(11) NOT NULL,
   `name` varchar(255) NOT NULL,
-  `price` double NOT NULL,
+  `price` decimal(10,0) NOT NULL,
   `description` varchar(355) NOT NULL,
   `amount` int(11) NOT NULL,
   `image1` varchar(255) NOT NULL,
@@ -99,10 +99,10 @@ CREATE TABLE `products` (
 --
 
 INSERT INTO `products` (`id`, `producerID`, `categoryID`, `name`, `price`, `description`, `amount`, `image1`, `image2`, `image3`) VALUES
-(1, 1, 3, 'PORTOFINO', 4.95, 'Prowadzenie zdrowego i aktywnego stylu życia nie oznacza, że musisz jeść mdłe posiłki i pożegnać się z przekąskami.\n\nZmień swoje podejście do przekąsek i rozpieść swoje kubki smakowe subtelnie wędzoną nutą chipsów proteinowych o smaku barbecue.\n\nChipsy proteinowe zawierają o 50% mniej tłuszczu niż smażone chipsy ziemniaczane, ponieważ nigdy ich nie smaż', 11, 'https://www.cozaherbata.pl/prod/products/normalCloud/herbata_zielona_portofino_1259.jpg', '', ''),
-(2, 4, 1, 'JAPAN MATCHA PREMIUM CULINARY', 20.9, 'Japan Matcha Premium Culinary to oryginalna, sproszkowana zielona herbata Matcha prosto z Japonii. Jest to typ kulinarny. Herbata zmielona w młynkach ceramicznych.', 3, 'https://www.cozaherbata.pl/prod/products/normalCloud/herbata_matcha_sklep_japan_matcha_premium_culinary_1938.jpg', '', ''),
-(3, 1, 3, 'Herbata ARJUNA - Czynność serca 100g', 26.9, 'ARJUNA - herbatka ziołowa SUPLEMENT DIETY w formie suszu roślinnego\r\n', 1, 'https://encrypted-tbn3.gstatic.com/shopping?q=tbn:ANd9GcSK9bBdRmHaYMMbRd-qpTz0mNp49sky5RC-QftJ6hahLjKlkekyqg&usqp=CAc', '', ''),
-(132, 1, 3, 'Herbata ARJUNA - Czynność serca 100g', 26.9, 'ARJUNA - herbatka ziołowa SUPLEMENT DIETY w formie suszu roślinnego\r\n', 1, 'https://encrypted-tbn3.gstatic.com/shopping?q=tbn:ANd9GcSK9bBdRmHaYMMbRd-qpTz0mNp49sky5RC-QftJ6hahLjKlkekyqg&usqp=CAc', '', '');
+(1, 1, 3, 'PORTOFINO', '5', 'Prowadzenie zdrowego i aktywnego stylu życia nie oznacza, że musisz jeść mdłe posiłki i pożegnać się z przekąskami.\n\nZmień swoje podejście do przekąsek i rozpieść swoje kubki smakowe subtelnie wędzoną nutą chipsów proteinowych o smaku barbecue.\n\nChipsy proteinowe zawierają o 50% mniej tłuszczu niż smażone chipsy ziemniaczane, ponieważ nigdy ich nie smaż', 11, 'https://www.cozaherbata.pl/prod/products/normalCloud/herbata_zielona_portofino_1259.jpg', '', ''),
+(2, 4, 1, 'JAPAN MATCHA PREMIUM CULINARY', '21', 'Japan Matcha Premium Culinary to oryginalna, sproszkowana zielona herbata Matcha prosto z Japonii. Jest to typ kulinarny. Herbata zmielona w młynkach ceramicznych.', 5, 'https://www.cozaherbata.pl/prod/products/normalCloud/herbata_matcha_sklep_japan_matcha_premium_culinary_1938.jpg', '', ''),
+(3, 1, 3, 'Herbata ARJUNA - Czynność serca 100g', '27', 'ARJUNA - herbatka ziołowa SUPLEMENT DIETY w formie suszu roślinnego\r\n', 17, 'https://encrypted-tbn3.gstatic.com/shopping?q=tbn:ANd9GcSK9bBdRmHaYMMbRd-qpTz0mNp49sky5RC-QftJ6hahLjKlkekyqg&usqp=CAc', '', ''),
+(132, 1, 3, 'Herbata ARJUNA - Czynność serca 100g', '207', 'ARJUNA - herbatka ziołowa SUPLEMENT DIETY w formie suszu roślinnego\r\n', 21, 'https://encrypted-tbn3.gstatic.com/shopping?q=tbn:ANd9GcSK9bBdRmHaYMMbRd-qpTz0mNp49sky5RC-QftJ6hahLjKlkekyqg&usqp=CAc', '', '');
 
 -- --------------------------------------------------------
 
@@ -120,7 +120,7 @@ CREATE TABLE `users` (
   `phone` bigint(11) NOT NULL,
   `shippingAddress` longtext NOT NULL,
   `shippingCity` varchar(255) NOT NULL,
-  `shippingPincode` int(11) NOT NULL
+  `shippingPincode` varchar(6) NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
 
 --
@@ -128,8 +128,8 @@ CREATE TABLE `users` (
 --
 
 INSERT INTO `users` (`id`, `type`, `email`, `password`, `firstname`, `lastname`, `phone`, `shippingAddress`, `shippingCity`, `shippingPincode`) VALUES
-(1, 1, 'admin@gramyse.pl', 'macieknowak123', 'Maciek', 'Nowak', 909898121, 'Fiołkowka 213', 'Limanowa', 34600),
-(2, 1, 'asd@asd.pl', 'foobar', 'Lolek123', '', 23534213, '', '', 0);
+(1, 1, 'admin@gramyse.pl', 'macieknowak123', 'Maciek', 'Nowak', 909898121, 'Fiołkowka 213', 'Limanowa', '34-600'),
+(2, 1, 'asd@asd.pl', 'foobar', 'Lolek123', '', 23534213, '', '', '12-321');
 
 --
 -- Indeksy dla zrzutów tabel
