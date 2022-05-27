@@ -1,8 +1,9 @@
 <?php
+session_start();
 if(isset($_POST['submit_paymentyOrder'])){
     $_SESSION['paymentyOrder'] = $_POST['Payment'];
     $_SESSION['order'] = true;
-    header("Location: ../index.php?mode=modes/order");
+    header("Location: ../index.php?mode=modes/order.php");
 
 }
 if(isset($_POST['submit_deliveryOrder'])){
@@ -39,9 +40,6 @@ if(isset($_POST['submit_addressOrder']))
             </form>
         </div>
     ';
-    unset($_SESSION['shoppingAdress']);
-    unset($_SESSION['shippingCity']);
-    unset($_SESSION['shippingPincode']);
 }
 if(isset($_SESSION['user'])){
     $result = $connect->query("SELECT shippingAddress, shippingCity, shippingPincode FROM users WHERE id='{$_SESSION['user']}'");

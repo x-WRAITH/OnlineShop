@@ -30,6 +30,26 @@ error_reporting(E_ERROR | E_PARSE);
                 </div>
             </div>
           </form>
+          <form method="POST" id="sort-form">
+            <div class="flex-center">
+                <div class="sorts">
+                    <label for="sorts"></label>
+                      <select name="sort" id="sorts" onchange="this.form.submit();">
+                        <option id="RANDOM">Random</option>
+                        <option value="DESC" id="DESC">Price from the highest</option>
+                        <option value="ASC" id="ASC">Price from the smallest</option>
+                      </select>
+                      <select name="category" id="categories" onchange="this.form.submit();">
+                        <option id="All">All categories</option>
+                        <?php
+                        $res=$connect->query("SELECT * FROM category");
+                        while($ro=$res->fetch_object()) { 
+                            echo "<option value='$ro->id'>$ro->categoryName</option>";}
+                        ?>
+                      </select>
+                </div>
+            </div>
+          </form>
 
     </div>
     <?php

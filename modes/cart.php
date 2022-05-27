@@ -76,7 +76,7 @@ if(isset($_GET['action'])){
 									<td><?php echo $row->name; ?></td>
 									<td><?php echo $row->price."$"; ?></td>
 									<input type="hidden" name="indexes[]" value="<?php echo $index; ?>">
-									<td><input type="number" max="<?php echo $row->amount; ?>" value="<?php echo $_SESSION['quantity_array'][$index]; ?>" name="qty_<?php echo $index; ?>"></td>
+									<td><input type="number" min="1" max="<?php echo $row->amount; ?>" value="<?php echo $_SESSION['quantity_array'][$index]; ?>" name="qty_<?php echo $index; ?>"></td>
 									<td><?php echo ($_SESSION['quantity_array'][$index]*$row->price)."$"; ?></td>
 								</tr>
 								<?php
@@ -102,6 +102,7 @@ if(isset($_GET['action'])){
         <h2 id="total">Total price: <?php echo $total . "$"; ?></h2>
     </div>
 	<?php
+	echo $_SESSION['quantity_array'][$index];
 			if(!empty($_SESSION['cart_array'])){
 				echo '<a href="modes/cart.php?action=order">Order Cart</a>';
 			}
